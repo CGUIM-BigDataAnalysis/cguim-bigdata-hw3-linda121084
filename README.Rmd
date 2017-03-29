@@ -3,67 +3,123 @@ title: "長庚大學 大數據分析方法 作業三"
 output: github_document
 ---
 
-## 作業說明 （繳交時請直接刪除這個章節）
 
-作業目的：練習初級爬蟲，並將爬蟲結果整理成資料框data.frame
-
-依下列指示，完成網站內文分析：
-
-- 爬取指定網站內容
-    - 學號結尾 0,4,8:[Ptt Tech_Job 版](https://www.ptt.cc/bbs/Tech_Job/index.html)
-    - 學號結尾 1,5,9:[Ptt NBA 版](https://www.ptt.cc/bbs/NBA/index.html)
-    - 學號結尾 2,6:[Ptt LoL 版](https://www.ptt.cc/bbs/LoL/index.html)
-    - 學號結尾 3,7:[Ptt movie 版](https://www.ptt.cc/bbs/movie/index.html)
-    
-- 試著爬出**至少100篇**文章（`30pt`）的**標題**、**推文數**與**作者ID**（各`10pt`）
-    - 資料框欄位名稱：
-        - **標題**：Title
-        - **推文數**：PushNum
-        - **作者ID**：Author
-    - 一頁只有20篇，該怎麼辦？
-        - 提示：使用for + rbind()將分批爬取出的資料結合
-        - 範例：dataframeAll<-rbind(dataframe1,dataframe2) 
-        - 參考：[6.6 資料組合](http://yijutseng.github.io/DataScienceRBook/manipulation.html#section-6.6)
-    
-- 將爬取出的資料輸出至Markdown報告中（`10pt`）
-    - 使用knitr::kable(資料框物件)整理輸出
-    
-- 用文字搭配程式碼解釋爬蟲結果 
-    - 共爬出幾篇文章標題？（程式碼與文字解釋各`5pt`）
-        - dim(), nrow(), str()皆可
-    - 哪個作者文章數最多？（程式碼與文字解釋各`5pt`）
-        - table()
-    - 其他爬蟲結果解釋（`10pt`）
-        - 試著找出有趣的現象，不一定要用程式碼搭配解釋，也可只用文字
 
     
 
 ## 網站資料爬取
 ```{r}
-#這是R Code Chunk
-library(rvest) ##第一次使用要先安裝 install.packages("rvest")
-##read_html
-##html_nodes
-##html_text
+library(rvest)
+ptt1<-"https://www.ptt.cc/bbs/movie/index.html"
+pttcontent1<-read_html(ptt1)
+post_title1<-pttcontent1%>%html_nodes(".title")%>%html_text()
+post_title1
+post_author1<-pttcontent1%>%html_nodes(".author")%>%html_text()
+post_author1
+post_good1<-pttcontent1%>%html_nodes(".nrec")%>%html_text()
+post_good1
+
+library(rvest)
+html<-read_html("https://www.ptt.cc/bbs/movie/index.html")
+btnurl<-html%>%html_nodes("a[class='btn wide']")%>%html_attr("href")
+indexnum<-as.numeric(gsub("/bbs/movie/index|.html","",btnurl[2]))
+for(i in(indexnum-3):(indexnum+1)){
+  #print(i)
+  print(paste0("https://www.ptt.cc/bbs/movie/index",i,",html"))
+}
+
+
+ptt2<-"https://www.ptt.cc/bbs/movie/index5279.html"
+pttcontent2<-read_html(ptt2)
+post_title2<-pttcontent2%>%html_nodes(".title")%>%html_text()
+post_title2
+post_author2<-pttcontent2%>%html_nodes(".author")%>%html_text()
+post_author2
+post_good2<-pttcontent2%>%html_nodes(".nrec")%>%html_text()
+post_good2
+
+
+ptt3<-"https://www.ptt.cc/bbs/movie/index5278.html"
+pttcontent3<-read_html(ptt3)
+post_title3<-pttcontent3%>%html_nodes(".title")%>%html_text()
+post_title3
+post_author3<-pttcontent3%>%html_nodes(".author")%>%html_text()
+post_author3
+post_good3<-pttcontent3%>%html_nodes(".nrec")%>%html_text()
+post_good3
+
+ptt4<-"https://www.ptt.cc/bbs/movie/index5277.html"
+pttcontent4<-read_html(ptt4)
+post_title4<-pttcontent4%>%html_nodes(".title")%>%html_text()
+post_title4
+post_author4<-pttcontent4%>%html_nodes(".author")%>%html_text()
+post_author4
+post_good4<-pttcontent4%>%html_nodes(".nrec")%>%html_text()
+post_good4
+
+ptt5<-"https://www.ptt.cc/bbs/movie/index5276.html"
+pttcontent5<-read_html(ptt5)
+post_title5<-pttcontent5%>%html_nodes(".title")%>%html_text()
+post_title5
+post_author5<-pttcontent5%>%html_nodes(".author")%>%html_text()
+post_author5
+post_good5<-pttcontent5%>%html_nodes(".nrec")%>%html_text()
+post_good5
+
+ptt6<-"https://www.ptt.cc/bbs/movie/index5275.html"
+pttcontent6<-read_html(ptt6)
+post_title6<-pttcontent6%>%html_nodes(".title")%>%html_text()
+post_title6
+post_author6<-pttcontent6%>%html_nodes(".author")%>%html_text()
+post_author6
+post_good6<-pttcontent6%>%html_nodes(".nrec")%>%html_text()
+post_good6
+
+ptt7<-"https://www.ptt.cc/bbs/movie/index5274.html"
+pttcontent7<-read_html(ptt7)
+post_title7<-pttcontent7%>%html_nodes(".title")%>%html_text()
+post_title7
+post_author7<-pttcontent7%>%html_nodes(".author")%>%html_text()
+post_author7
+post_good7<-pttcontent7%>%html_nodes(".nrec")%>%html_text()
+post_good7
+
+
+
+frame1<-data.frame(Title=c(post_title1),pushnum=c(post_good1),Author=c(post_author1))
+frame1
+frame2<-data.frame(Title=c(post_title2),pushnum=c(post_good2),Author=c(post_author2))
+frame2
+frame3<-data.frame(Title=c(post_title3),pushnum=c(post_good3),Author=c(post_author3))
+frame3
+frame4<-data.frame(Title=c(post_title4),pushnum=c(post_good4),Author=c(post_author4))
+frame4
+frame5<-data.frame(Title=c(post_title5),pushnum=c(post_good5),Author=c(post_author5))
+frame5
+frame6<-data.frame(Title=c(post_title6),pushnum=c(post_good6),Author=c(post_author6))
+frame6
+frame7<-data.frame(Title=c(post_title7),pushnum=c(post_good7),Author=c(post_author7))
+frame7
+
+dataframeAll<-rbind(frame1,frame2,frame3,frame4,frame5,frame6,frame7)
 ```
 
 ## 爬蟲結果呈現
 ```{r}
-#這是R Code Chunk
-knitr::kable(iris) ##請將iris取代為上個步驟中產生的爬蟲資料資料框
+knitr::kable(dataframeAll[1:100,c("Title","pushnum","Author")])
 ```
 
 ## 解釋爬蟲結果 
 ```{r}
-#這是R Code Chunk
+dim(dataframeAll)
 ```
 
-解釋解釋解釋解釋
+抓出127筆觀察值，3個欄位
 
 ```{r}
-#這是R Code Chunk
+table(dataframeAll$Author)
 ```
 
-解釋解釋解釋解釋
+作者qpr322、iam168888888各有3篇po文
 
-人工結論與解釋解釋解釋解釋解釋解釋解釋
+原來R的表格整理出來那麼好看啊!
